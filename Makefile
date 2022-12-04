@@ -4,5 +4,8 @@ export-all:
 	go run ./cmd/main.go all
 observe:
 	go run ./cmd/main.go observe
-build:
+build-linux:
 	go build -o dbexport ./cmd
+build-windows:
+	GOOS=windows go build -o dbexport-win64 ./cmd
+build: build-linux build-windows
