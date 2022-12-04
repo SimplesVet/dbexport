@@ -237,7 +237,7 @@ func GetSqlForObject(objectType string, objectName string) string {
 }
 
 func GetSqlForTable(tableName string) string {
-	query := fmt.Sprintf("SHOW CREATE TABLE %s", tableName)
+	query := fmt.Sprintf("SHOW CREATE TABLE `%s`", tableName)
 	result := ExecuteQueryRow(query)
 	return formatResultForTable(result)
 }
@@ -291,7 +291,7 @@ func formatQuery(query string) string {
 }
 
 func GetSqlForProcedure(procedureName string) string {
-	query := fmt.Sprintf("SHOW CREATE PROCEDURE %s", procedureName)
+	query := fmt.Sprintf("SHOW CREATE PROCEDURE `%s`", procedureName)
 	result := ExecuteQueryRow(query)
 	return formatResultForProcedure(result)
 }
@@ -325,7 +325,7 @@ func formatProcedure(definition string) string {
 }
 
 func GetSqlForFunction(functionName string) string {
-	query := fmt.Sprintf("SHOW CREATE FUNCTION %s", functionName)
+	query := fmt.Sprintf("SHOW CREATE FUNCTION `%s`", functionName)
 	result := ExecuteQueryRow(query)
 	return formatResultForFunction(result)
 }
