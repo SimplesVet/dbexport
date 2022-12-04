@@ -7,5 +7,5 @@ observe:
 build-linux:
 	go build -o dbexport ./cmd
 build-windows:
-	GOOS=windows go build -o dbexport-win64 ./cmd
+	GOOS=windows go build -o dbexport-win64.exe ./cmd
 build: build-linux build-windows
