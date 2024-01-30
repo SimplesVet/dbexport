@@ -1,6 +1,7 @@
 package dbexport
 
 import (
+	"fmt"
 	"io/ioutil"
 	"log"
 	"os"
@@ -20,6 +21,8 @@ func SaveDbObjects(dbObjects []DbObject) []string {
 	for i := range dbObjects {
 		dbObject := dbObjects[i]
 		filePath := makeDbObjectPath(dbObject)
+		fmt.Println("Salvando", dbObject.Type, ":", dbObject.Name, "->", i, "de", len(dbObjects))
+		dbObject.Content = GetSqlForObject(dbObject.Type, dbObject.Name)
 		if WriteSqlToFile(filePath, dbObject.Content) {
 			savedFiles = append(savedFiles, filePath)
 		}
