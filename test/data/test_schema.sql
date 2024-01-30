@@ -1,3 +1,5 @@
+USE dbexport;
+
 CREATE TABLE test_table (
   id INT NOT NULL,
   name varchar(100) NULL
