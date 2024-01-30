@@ -16,8 +16,11 @@ func conn() *sql.DB {
 	port := os.Getenv("DB_PORT")
 	dbname := os.Getenv("DB_DATABASE")
 
-	connectionString := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s", user, password, host, port, dbname)
+	connectionString := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?timeout=90s", user, password, host, port, dbname)
 	db, err := sql.Open(driver, connectionString)
+	db.SetConnMaxLifetime(0)
+	db.SetMaxIdleConns(3)
+	db.SetMaxOpenConns(3)
 
 	// if there is an error opening the connection, handle it
 	if err != nil {
