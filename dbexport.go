@@ -174,12 +174,17 @@ func GetDbObjectsFor(objType, objName string, databaseName string) []DbObject {
 	objects := []DbObject{}
 	dbObject := DbObject{}
 	objNames := GetObjectsFromSchema(objType, objName, databaseName)
+	fmt.Println("GetDbObjectsFor", objType)
 
-	for _, objName := range objNames {
+	x := len(objNames)
+
+	for i, objName := range objNames {
+		fmt.Println("Objeto:", objName)
+		fmt.Println(i, "de", x)
 		dbObject.Name = objName
-		dbObject.Content = GetSqlForObject(objType, objName)
 		dbObject.Type = objType
 		objects = append(objects, dbObject)
+		fmt.Println("Objeto", objName, " adicionado a lista")
 	}
 
 	return objects
@@ -319,7 +324,7 @@ func formatResultForProcedure(result *sql.Row) string {
 func formatProcedure(definition string) string {
 	separatedDefinition := strings.Split(definition, "PROCEDURE")
 
-	definition = "CREATE PROCEDURE " + separatedDefinition[1]
+	definition = "CREATE PROCEDURE " + strings.TrimSpace(separatedDefinition[1])
 
 	return definition
 }
@@ -353,7 +358,7 @@ func formatResultForFunction(result *sql.Row) string {
 func formatFunction(definition string) string {
 	separatedDefinition := strings.Split(definition, "FUNCTION")
 
-	definition = "CREATE FUNCTION " + separatedDefinition[1]
+	definition = "CREATE FUNCTION " + strings.TrimSpace(separatedDefinition[1])
 
 	return definition
 }

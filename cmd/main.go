@@ -11,11 +11,12 @@ import (
 
 var objName string
 var timer int
+var printMessages bool
 
 func ExportDbObjectsCmd(objectType string, objectName string, silent bool) int {
-	if !silent {
-		fmt.Println("Exporting", objectType)
-	}
+	printMessages = !silent
+
+	print("Exporting", objectType)
 
 	var dbObjects []dbexport.DbObject
 
@@ -35,25 +36,34 @@ func ExportDbObjectsCmd(objectType string, objectName string, silent bool) int {
 		dbObjects = dbexport.GetAll()
 	}
 
+	print("Objects exported")
+
 	if len(dbObjects) == 0 {
-		fmt.Println("nenhum objeto encontrado, revise o arquivo de conexão com o banco")
+		print("nenhum objeto encontrado, revise o arquivo de conexão com o banco")
 		return 0
 	}
 
+	print("Saving objects")
 	savedFiles := dbexport.SaveDbObjects(dbObjects)
 
 	if len(savedFiles) == 0 {
-		fmt.Println("nenhum resultado encontrado, revise o arquivo de conexão com o banco")
+		print("nenhum resultado encontrado, revise o arquivo de conexão com o banco")
 		return 0
 	}
 
 	if !silent {
 		for _, file := range savedFiles {
-			fmt.Println("File saved in", file)
+			print("File saved in", file)
 		}
 	}
 
 	return len(savedFiles)
+}
+
+func print(message ...string) {
+	if printMessages {
+		fmt.Println(message)
+	}
 }
 
 func Observe(interval int) {
