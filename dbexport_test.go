@@ -288,4 +288,8 @@ func TestExportEvent(t *testing.T) {
 	if !strings.Contains(strings.ToUpper(sql), "CREATE EVENT") {
 		t.Errorf("Expected contains CREATE EVENT actual %s", sql)
 	}
+
+	if !strings.Contains(strings.ToUpper(sql), "ON SCHEDULE EVERY 1 HOUR") {
+		t.Errorf("Expected contains ON SCHEDULE EVERY 1 HOUR actual %s", sql)
+	}
 }

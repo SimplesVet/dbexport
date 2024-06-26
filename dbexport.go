@@ -430,30 +430,28 @@ func formatResultForEvent(result *sql.Row) string {
 
 func formatEvent(event CreateEvent) string {
 	eventSqlStruct := `CREATE EVENT %s
-	ON SCHEDULE %s
-	%s
-	%s
-	ON COMPLETION %s
-	COMMENT '%s'
-	DO
-	%s;
-	ALTER EVENT %s
-	%s`
+ON SCHEDULE %s
+%s%s
+ON COMPLETION %s
+COMMENT '%s'
+DO %s;
+ALTER EVENT %s
+%s;`
 	var starts string = ""
 	var ends string = ""
 
 	schedule := fmt.Sprintf(`EVERY %s %s`, event.IntervalValue, event.IntervalField)
-	if event.ExecuteAt != "" {
+	if event.ExecuteAt != "" && event.ExecuteAt != nil {
 		schedule = fmt.Sprintf(`AT %s`, event.ExecuteAt)
 	}
 
-	if event.Starts != "" {
+	if event.Starts != "" && event.Starts != nil {
 		starts = fmt.Sprintf("STARTS '%s'", event.Starts)
 	}
 
-	if event.Ends != "" {
-		ends = fmt.Sprintf("ENDS '%s'", event.Ends)
+	if event.Ends != "" && event.Ends != nil {
+		ends = fmt.Sprintf("\nENDS '%s'", event.Ends)
 	}
 
-	return fmt.Sprintf(eventSqlStruct, event.EventName, schedule, event.OnCompletion, starts, ends, event.EventComment, event.EventDefinition, event.EventName, event.Status)
+	return fmt.Sprintf(eventSqlStruct, event.EventName, schedule, starts, ends, event.OnCompletion, event.EventComment, event.EventDefinition, event.EventName, event.Status)
 }

@@ -21,7 +21,7 @@ func TestSaveDbObjects(t *testing.T) {
 		{Type: "views", Name: "vw_users", Content: "CREATE OR REPLACE VIEW vw_users SELECT * FROM users"},
 		{Type: "procedures", Name: "sp_users_ins", Content: "CREATE PROCEDURE sp_users_ins(IN p_name VARCHAR(255), IN p_email VARCHAR(255))"},
 		{Type: "functions", Name: "fn_users_exists", Content: "CREATE FUNCTION fn_users_exists(p_userename VARCHAR(255))"},
-		{Type: "events", Name: "ev_something", Content: "CREATE EVENT ev_count_users DO"},
+		{Type: "events", Name: "ev_count_users", Content: "CREATE EVENT ev_count_users DO"},
 		{Type: "triggers", Name: "tg_users_ins_after", Content: "CREATE TRIGGER tg_users_ins_after AFTER INSERT"},
 	}
 
